@@ -394,7 +394,7 @@ namespace ASCOM.scopefocusServer
                     {
                         connectedState = false;
                         SharedResources.Connected = false;
-                        SharedResources.tl.LogMessage(driverShortName + " Switch Connected Set", "Disconnected, " + SharedResources.connections + " connections left");
+                     //   SharedResources.tl.LogMessage(driverShortName + " Switch Connected Set", "Disconnected, " + SharedResources.connections + " connections left");
                     }
                 }
             }
