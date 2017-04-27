@@ -123,7 +123,8 @@ namespace ASCOM.scopefocusServer
         /// <summary>
         /// Private variable to hold the connected state
         /// </summary>
-      //  private bool connectedState;
+        /// // 4-27-17
+        private bool connectedState;
 
         /// <summary>
         /// Private variable to hold an ASCOM Utilities object
@@ -150,30 +151,32 @@ namespace ASCOM.scopefocusServer
         public Rotator()
         {
 
-          //  SharedResources.tl.LogMessage(driverShortName, "Starting initialization");
+        //    SharedResources.tl.LogMessage(driverShortName, "Starting initialization");
          //   connectedState = false; // Initialise connected to false
-      //      SharedResources.tl.LogMessage(driverShortName, "Completed initialization");
+        //    SharedResources.tl.LogMessage(driverShortName, "Completed initialization");
 
             driverID = Marshal.GenerateProgIdForType(this.GetType());
 
+            // 4-27-17
+            connectedState = false;
 
 
 
 
             
-          //  SharedResources.tl = new TraceLogger("", "scopefocusServer");
+     //      SharedResources.tl = new TraceLogger("", "scopefocusServer");
 
           //  remd 4-24-17
         //    ReadProfile(); // Read device configuration from the ASCOM Profile store
 
-            //tl.LogMessage("Rotator", "Starting initialisation");
+      //      tl.LogMessage("Rotator", "Starting initialisation");
 
             //connectedState = false; // Initialise connected to false
             //utilities = new Util(); //Initialise util object
             //astroUtilities = new AstroUtils(); // Initialise astro utilities object
             ////TODO: Implement your additional construction here
 
-            //tl.LogMessage("Rotator", "Completed initialisation");
+       //     tl.LogMessage("Rotator", "Completed initialisation");
 
 
 
@@ -363,251 +366,80 @@ namespace ASCOM.scopefocusServer
 
         public bool Connected
         {
-            // 4-23-17 add
+            // 4-27-17 mods
             get { return IsConnected; }
             set
             {
                 {
-                  //  SharedResources.tl.LogMessage("Connected Set", value.ToString());
+                    SharedResources.tl.LogMessage("Connected Set", value.ToString());
                     if (value == IsConnected)
                         return;
                     if (value)
                     {
                         if (IsConnected) return;
-                       // SharedResources.tl.LogMessage(driverShortName + "Connected Set", "Connecting to port " + QA.Properties.Settings.Default.COMPort);
-                     //   SharedResources.tl.LogMessage("Connected Set", "Connecting to port " + SharedResources.SharedSerial.PortName);
+                        //   SharedResources.tl.LogMessage(driverShortName + "Connected Set", "Connecting to port " + scopefocusServer.Properties.Settings.Default.);
+                        SharedResources.tl.LogMessage("Connected Set", "Connecting to port " + SharedResources.SharedSerial.PortName);
                         SharedResources.Connected = true;
 
                         // remd 4-25-17
-                        //connectedState = SharedResources.Connected;
-                        //if (connectedState)
-                        //{
-                        //    //focuserMaxStep = MaxIncrement;
-                        //    //focuserCurPos = Position;
-                        //    //focuserMaxPos = MaxStep;
-                        //}
+                        connectedState = SharedResources.Connected;
+                        if (connectedState)
+                        {
+                            //    //focuserMaxStep = MaxIncrement;
+                            //    //focuserCurPos = Position;
+                            //    //focuserMaxPos = MaxStep;
+                        }
                     }
                     else
                     {
-                      //  connectedState = false;
+                        connectedState = false;
                         SharedResources.Connected = false;
-                     //   SharedResources.tl.LogMessage(driverShortName + " Switch Connected Set", "Disconnected, " + SharedResources.connections + " connections left");
-                   }
+                        SharedResources.tl.LogMessage(driverShortName + " Switch Connected Set", "Disconnected, " + SharedResources.connections + " connections left");
+                    }
                 }
             }
+        }
+
+
+        // prev working version prior to 4-27-17
+        //public bool Connected
+        //{
+        //    // 4-23-17 add
+        //    get { return IsConnected; }
+        //    set
+        //    {
+        //        {
+        //            //  SharedResources.tl.LogMessage("Connected Set", value.ToString());
+        //            if (value == IsConnected)
+        //                return;
+        //            if (value)
+        //            {
+        //                if (IsConnected) return;
+        //                // SharedResources.tl.LogMessage(driverShortName + "Connected Set", "Connecting to port " + QA.Properties.Settings.Default.COMPort);
+        //                //   SharedResources.tl.LogMessage("Connected Set", "Connecting to port " + SharedResources.SharedSerial.PortName);
+        //                SharedResources.Connected = true;
+
+        //                // remd 4-25-17
+        //                //connectedState = SharedResources.Connected;
+        //                //if (connectedState)
+        //                //{
+        //                //    //focuserMaxStep = MaxIncrement;
+        //                //    //focuserCurPos = Position;
+        //                //    //focuserMaxPos = MaxStep;
+        //                //}
+        //            }
+        //            else
+        //            {
+        //                //  connectedState = false;
+        //                SharedResources.Connected = false;
+        //                //   SharedResources.tl.LogMessage(driverShortName + " Switch Connected Set", "Disconnected, " + SharedResources.connections + " connections left");
+        //            }
+        //        }
+        //    }
+        //}
 
 
 
-
-
-
-
-
-
-
-
-            //get
-            //{
-            //    LogMessage("Connected", "Get {0}", IsConnected);
-            //    return IsConnected;
-            //}
-            //set
-            //{
-            //    tl.LogMessage("Connected", "Set {0}", value);
-            //    if (value == IsConnected)
-            //        return;
-
-            //    if (value)
-            //    {
-            //        connectedState = true;
-            //        LogMessage("Connected Set", "Connecting to port {0}", comPort);
-            //        // TODO connect to the device
-            //    }
-            //    else
-            //    {
-            //        connectedState = false;
-            //        LogMessage("Connected Set", "Disconnecting from port {0}", comPort);
-            //        // TODO disconnect from the device
-            //    }
-            //}
-
-
-
-                // remd 4-23-17  ****/ needs to b in sharedresources
-
-
-            //get
-            //{
-            //   tl.LogMessage("Connected Get", IsConnected.ToString());
-            //    return IsConnected;
-            //}
-            //set
-            //{
-            //   tl.LogMessage("Connected Set", value.ToString());
-            //    if (value == IsConnected)
-            //        return;
-
-            //    if (value)
-            //    {
-            //        connectedState = true;
-            //        tl.LogMessage("Connected Set", "Connecting to port " + comPort);
-            //        // TODO connect to the device
-            //        string version = DriverVersion;
-
-            //        // add
-
-            //        //     bool homeSet = false;
-            //        float posValue = 0;
-            //        bool setPos = false;
-            //        //   bool reverse = true;
-            //        bool contHold = false;
-
-            //        // check if we are connected, return if we are
-            //        if (serialPort != null && serialPort.Connected)
-            //            return;
-            //        // get the port name from the profile
-            //        string portName;
-            //        using (ASCOM.Utilities.Profile p = new Profile())
-            //        {
-            //            // get the values that are stored in the ASCOM Profile for this driver
-            //            // these were usually set in the settings dialog
-            //            p.DeviceType = "Rotator";
-            //            if (!p.IsRegistered("ASCOM.AWR.Telescope"))  // added 2-28-16
-            //            {
-            //                p.Register("ASCOM.scopefocusServer.Rotator", "ASCOM Rotator Server Driver for scopefocus");
-            //            }
-
-            //            //        homeSet = p.GetValue(driverID, "HomeSet").ToLower().Equals("true") ? true : false;
-            //            portName = p.GetValue(driverID, "ComPort");
-            //            //    portName = "COM4";
-            //            setPos = p.GetValue(driverID, "SetPos").ToLower().Equals("true") ? true : false;
-
-            //            // 6-16-16 added 2 lines below
-            //            //    reverse = p.GetValue(driverID, "Reverse").ToLower().Equals("true") ? true : false;
-            //            contHold = p.GetValue(driverID, "ContHold").ToLower().Equals("true") ? true : false;
-
-            //            if (setPos)
-            //                posValue = System.Convert.ToSingle(p.GetValue(driverID, "Pos"));
-            //            //     tempDisplay = p.GetValue(driverID, "TempDisp");
-            //            stepsPerDegree = Convert.ToInt32(p.GetValue(driverID, "StepsPerDegree"));
-            //           SharedResources.tl.LogMessage("Steps per degree:", stepsPerDegree.ToString());
-            //           SharedResources.tl.LogMessage("stepSize", StepSize.ToString());
-
-            //            //blValue = System.Convert.ToInt32(p.GetValue(driverId, "BackLight"));
-
-            //            //*****temp rem until config is finished************
-
-
-            //            if (string.IsNullOrEmpty(portName))
-            //            {
-            //                // report a problem with the port name
-            //                throw new ASCOM.NotConnectedException("no Com port selected");
-            //            }
-
-            //            //*** end temp rem
-
-
-
-            //            // try to connect using the port
-            //            try
-            //            {
-            //                //    log = new StreamWriter("c:\\log.txt");
-            //               SharedResources.tl.LogMessage("Connecting to serial port", "");
-
-            //                // setup the serial port.
-
-            //                serialPort = new Serial();
-            //                serialPort.PortName = portName;
-            //                serialPort.Speed = SerialSpeed.ps9600;
-            //                serialPort.StopBits = SerialStopBits.One;
-            //                serialPort.Parity = SerialParity.None;
-            //                serialPort.DataBits = 8;
-            //                serialPort.DTREnable = false;
-
-
-            //                if (!serialPort.Connected)
-            //                    serialPort.Connected = true;
-
-
-            //                // flush whatever is there.
-            //                serialPort.ClearBuffers();
-
-
-            //                // wait for the Serial Port to come online...better way to do this???
-            //                System.Threading.Thread.Sleep(1000);
-
-
-            //                // if the user is setting a position in the Settings dialog set it here.
-            //                if (setPos)
-            //                    CommandString("P " + Math.Round(posValue * stepsPerDegree + (360 * stepsPerDegree), 0).ToString() + "#", false);   // was + 36000 not 360*stepsperdegree
-            //                                                                                                                                       // CommandString("P " + Math.Round(posValue * stepsPerDegree + 9000, 0).ToString() + "#", false);  //orig was M changed to P 10-18-2015 (want it to set the value not move)
-            //                                                                                                                                       //3-7-17 above also need to correct for user defined steps / degree (not just 100); 
-
-            //                // added 6-16-16 
-            //                //if (reverse)
-            //                //    CommandString("R 1#", false);
-            //                //else
-            //                //    CommandString("R 0#", false); // motor sitting shaft up turns clockwise with increasing numbers if NOT reversed
-
-            //                if (contHold)
-            //                    CommandString("C 1#", false); //continuous hold on
-            //                else
-            //                    CommandString("C 0#", false);
-
-            //                // log the arduino firware version
-            //                string ver = CommandString("V#", false);
-            //                string verTrim = ver.Replace('#', ' ');
-            //                string versn = verTrim.Replace('V', ' ').Trim();
-            //                tl.LogMessage("Firmware Version: ", versn.ToString());
-
-
-            
-
-
-
-            //            }
-            //            catch (Exception ex)
-            //            {
-            //                // report any error
-            //                throw new ASCOM.NotConnectedException("Serial port connectionerror", ex);
-            //            }
-            //        }
-
-
-
-
-            //        //  connectedState = true;
-            //        //  tl.LogMessage("Connected Set", "Connecting to port " + comPort);
-            //        // TODO connect to the device
-            //    }
-            //    else
-            //    {
-            //        CommandString("C 0#", false); //release the continuous hold
-            //        System.Threading.Thread.Sleep(500);
-            //        //  Dispose();
-            //        connectedState = false;
-            //        tl.LogMessage("Connected Set", "Disconnecting from port " + comPort);
-            //        if (serialPort != null && serialPort.Connected)
-            //        {
-            //            //       CommandString("C 0#", false); //release the continuous hold
-            //            //       System.Threading.Thread.Sleep(500);
-            //            serialPort.Connected = false;
-            //            serialPort.Dispose();
-            //            serialPort = null;
-            //        }
-
-
-
-            //    }
-            //}
-        
-
-
-
-
-
-
-    }
 
         public string Description
         {
@@ -1038,9 +870,10 @@ namespace ASCOM.scopefocusServer
         {
             get
             {
-                return SharedResources.IsConnected;
+               // return SharedResources.IsConnected;
                 // TODO check that the driver hardware connection exists and is connected to the hardware
-               // return connectedState;
+                // 4-27-17  was return above sharedResourses....
+                return connectedState;
             }
         }
 
