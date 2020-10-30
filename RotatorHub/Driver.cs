@@ -93,7 +93,7 @@ namespace ASCOM.scopefocusServer
         /// The DeviceID is used by ASCOM applications to load the driver at runtime.
         /// </summary>
         /// 
-        private static int interfaceVersion = 2;
+        private static short interfaceVersion = 2;
         public static string driverID;
         public string driverDescription;
         //    internal static string driverID = "ASCOM.scopefocusServer.Rotator";
@@ -108,7 +108,7 @@ namespace ASCOM.scopefocusServer
         /// 
         private static string driverShortName = "scopefocusServer Rotator";
 
-        //   private static string driverDescription = "ASCOM Rotator Driver for scopefocusServer.";
+          // private static string driverDescription = "ASCOM Rotator Driver for scopefocusServer.";
 
         internal static string comPortProfileName = "COM Port"; // Constants used for Profile persistence
         internal static string comPortDefault = "COM1";
@@ -169,7 +169,10 @@ namespace ASCOM.scopefocusServer
           //  remd 4-24-17
         //    ReadProfile(); // Read device configuration from the ASCOM Profile store
 
-      //      tl.LogMessage("Rotator", "Starting initialisation");
+
+
+         // added 10-30-2020
+        //    tl.LogMessage("Rotator", "Starting initialisation");
 
             //connectedState = false; // Initialise connected to false
             //utilities = new Util(); //Initialise util object
@@ -483,9 +486,24 @@ namespace ASCOM.scopefocusServer
                 SharedResources.tl.LogMessage(driverShortName + " InterfaceVersion Get", interfaceVersion.ToString());
 
                 //LogMessage("InterfaceVersion Get", "2");
-                return Convert.ToInt16(interfaceVersion);
+                //  return Convert.ToInt16(interfaceVersion);
+                //  return SharedResources.InterfaceVersion;
+                return interfaceVersion;
             }
         }
+
+        // moved to sharedResources
+      //  public short InterfaceVersion
+      //  {
+            // set by the driver wizard
+       //     get
+       //     {
+       //         SharedResources.tl.LogMessage(driverShortName + " InterfaceVersion Get", interfaceVersion.ToString());
+
+                //LogMessage("InterfaceVersion Get", "2");
+         //       return Convert.ToInt16(interfaceVersion);
+         //   }
+     //   }
 
         public string Name
         {
@@ -513,7 +531,9 @@ namespace ASCOM.scopefocusServer
         {
             get
             {
-               SharedResources.tl.LogMessage("CanReverse Get", false.ToString());
+                SharedResources.tl.LogMessage("CanReverse Get", false.ToString());
+              //  return SharedResources.CanReverse;
+                
                 return false;
             }
         }
@@ -524,7 +544,7 @@ namespace ASCOM.scopefocusServer
 
           //  CommandString("S#", false);
             //  tl.LogMessage("Halt", "Not implemented");
-            throw new ASCOM.MethodNotImplementedException("Halt");
+         //   throw new ASCOM.MethodNotImplementedException("Halt");
         }
 
         public bool IsMoving
@@ -695,16 +715,27 @@ namespace ASCOM.scopefocusServer
             }
         }
 
+       
+
         public bool Reverse
         {
             get
             {
-                tl.LogMessage("Reverse Get", "Not implemented");
+               // return SharedResources.ReverseState;
+                SharedResources.tl.LogMessage("Reverse Get", "Not implemented");
                 throw new ASCOM.PropertyNotImplementedException("Reverse", false);
             }
             set
             {
-                tl.LogMessage("Reverse Set", "Not implemented");
+                //try
+                //{
+                //    SharedResources.ReverseState = value;
+                //}
+                //catch (Exception xcp)
+                //{
+                //    throw xcp;
+                //}
+               SharedResources.tl.LogMessage("Reverse Set", "Not implemented");
                 throw new ASCOM.PropertyNotImplementedException("Reverse", true);
             }
         }
