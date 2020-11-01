@@ -94,8 +94,8 @@ namespace ASCOM.scopefocusServer
         /// </summary>
         /// 
         private static short interfaceVersion = 2;
-        public static string driverID;
-        public string driverDescription;
+        internal static string driverID = "ASCOM.ScopefocusServer.Rotator";
+        private static string driverDescription = "ASCOM Rotator Driver for scopefocusServer";
         //    internal static string driverID = "ASCOM.scopefocusServer.Rotator";
 
 
